@@ -7,20 +7,36 @@ package entities
     import net.flashpunk.graphics.Image;
     
     public class Player extends Entity {
+        [Embed(source="../../assets/images/png/player_point.png")]
+        private const POINT:Class;
         [Embed(source="../../assets/images/png/player_triangle.png")]
-        private const PLAYER:Class;
-
+        private const TRIANGLE:Class;
+        
         public var line:Line;
+
+        public var state:String;
+
+        private var pointImage:Image = new Image(POINT);
+        private var triangleImage:Image = new Image(TRIANGLE);
 
         public function Player(x:Number, y:Number):void {
             super(x, y);
-            var playerImage:Image = new Image(PLAYER);
-            playerImage.centerOrigin();
-            this.graphic = playerImage;
+            pointImage.centerOrigin();
+            triangleImage.centerOrigin();
         }
 
         override public function update():void {
             super.update();
+
+            if (Input.check(Key.DIGIT_1)) {
+                this.graphic = pointImage;
+            }
+            else if (Input.check(Key.DIGIT_3)) {
+                this.graphic = triangleImage
+            }
+            else {
+                this.graphic = null;
+            }
 
             if (!line.linearMotion) {
                 line.startMotion();
