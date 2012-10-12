@@ -8,7 +8,9 @@ package worlds
     public class TestWorld extends World {
 
         private var
-            player:Player;
+            player:Player,
+            line:Line,
+            triangle:Triangle;
 
         public function TestWorld():void {
             super();
@@ -16,8 +18,15 @@ package worlds
 
         override public function begin():void {
             super.begin();
-            player = new Player(FP.halfWidth, FP.halfHeight);
-            player.line = new Line(new Vertex(300, 400), new Vertex(300, 100));
+            
+            var vertexOne:ShapeVertex = new ShapeVertex(156, 300);
+            var vertexTwo:ShapeVertex = new ShapeVertex(256, 100);
+            var vertexThree:ShapeVertex = new ShapeVertex(356, 300);
+            var vertexFour:ShapeVertex = new ShapeVertex(156, 100);
+
+            add(new Triangle(vertexOne, vertexTwo, vertexThree));
+            add(new Line(vertexOne, vertexFour));
+            player = new Player(vertexOne);
             add(player);
         }
     }
